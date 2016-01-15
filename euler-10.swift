@@ -5,14 +5,14 @@
 //
 // Find the sum of all the primes below two million.
 
-var primes = [Int]()
-var numbers = Array(2...2000000)
+import Darwin
 
-while numbers.count > 0 {
-  let prime = numbers.removeAtIndex(0)
-  primes.append(prime)
-  numbers = numbers.filter { $0 % prime != 0 }
-}
+let n = 2000000
+var sameprimes = Set(2...n)
+sameprimes.subtractInPlace(
+	(2...Int(sqrt(Double(n)))).flatMap { (2*$0).stride(through:n, by:$0) }
+)
+let primes = sameprimes.sort()
 
 let answer = 142913828922
 print(primes.reduce(0, combine: +))
